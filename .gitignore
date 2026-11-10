@@ -1,0 +1,32 @@
+# 只让框架进版本库。规则是「先全忽略，再逐个放行」。
+# 在 learn/ 目录 git init 时装这份；在仓库根 init 时用根目录那份。
+
+*
+!.gitignore
+!README.md
+!PLAN.md
+!docs/
+!docs/**
+!lib/
+!lib/**
+!pipeline/
+!pipeline/**
+!prompts/
+!prompts/**
+!config/
+!config/**
+
+# 自己填的配置（含真实姓名）和实验产物不进库
+config/persona.yaml
+test/
+work/
+models/
+cache/
+adapters/
+
+__pycache__/
+*.pyc
+*.pyo
+*.log
+*.gguf
+*.safetensors

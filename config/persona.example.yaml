@@ -1,0 +1,41 @@
+# 复制这个文件成 config/persona.yaml，只改这里
+persona:
+  name: 人物A
+  self_names: [人物A]        # 目标人物的名字，必须和 chat.txt 里的说话人一字不差
+  other_names: [人物B]       # 可选：对方的名字，用于检查回复里有没有凭空冒出来
+  # 系统提示：训练和推理必须用同一份，否则模型学到的分布对不上
+  # 前三条是「内容一致性」的硬约束（聊天场景专用），不建议删；风格的描述随便改
+  system_prompt: |
+    你正在用微信和朋友聊天。
+    - 只接对方刚说的话往下聊，不要自己换话题
+    - 不清楚的事就问一句，不要编
+    - 一次发一到两句，像随手打字
+
+data:
+  session_gap_min: 30         # 相邻消息间隔超过这个分钟数就切成新会话
+  max_burst: 3                # 一次连发最多取几条当目标，尾巴多是自言自语
+
+clean:
+  max_target_chars: 120       # 一次回复的上限字数；连发取前几条，超了截断
+  max_english_chars: 200      # 长英文书信不当训练目标；短的保留
+  ai_score_min: 4             # 结构化打分到这个分且够长，判为外部粘贴
+  ai_min_chars: 200
+  merge_resent_sec: 60        # 同会话内几秒内的完全相同重发，合并
+  mask_privacy: true
+
+sft:
+  max_context_pairs: 3        # 上下文最多取几轮（1 轮 = 对方 + 我）
+  max_context_chars: 600      # 上下文总字数上限
+  val_ratio: 0.1              # 验证集比例（按时间取最后一段）
+  min_val: 50                # 连发超过这个条数就截断
+
+fetch:
+  mirror: https://hf-mirror.com   # 国内加速；留空则用官方 hub
+
+deploy:
+  model_name: persona-a     # Ollama 模型名，只能小写字母数字和 - _ .
+  num_ctx: 4096
+  temperature: 0.7
+  top_p: 0.9
+  repeat_penalty: 1.1
+  num_predict: 160                  # 单次回复上限 token，防长篇

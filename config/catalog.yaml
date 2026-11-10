@@ -1,0 +1,102 @@
+# 候选模型目录。第 8 步按显存预算和打分自动挑，不要手改。
+# params_b / layers / hidden / vocab / ctx 用来算显存；chinese 1~5 是中文语感；gguf: self 表示能本地转 GGUF。
+
+models:
+  - id: Qwen3-0.6B
+    repo: Qwen/Qwen3-0.6B
+    params_b: 0.6
+    layers: 28
+    hidden: 1024
+    vocab: 151936
+    ctx: 32768
+    lf_template: qwen3_nothink
+    chinese: 3
+    license: Apache-2.0
+    commercial: true
+    gguf: self
+    note: 兜底选项，只能学到语气，学不到内容
+
+  - id: Qwen3-1.7B
+    repo: Qwen/Qwen3-1.7B
+    params_b: 1.7
+    layers: 28
+    hidden: 2048
+    vocab: 151936
+    ctx: 32768
+    lf_template: qwen3_nothink
+    chinese: 4
+    license: Apache-2.0
+    commercial: true
+    gguf: self
+    note: 小显存首选，短句聊天够用
+
+  - id: Qwen2.5-1.5B-Instruct
+    repo: Qwen/Qwen2.5-1.5B-Instruct
+    params_b: 1.5
+    layers: 28
+    hidden: 1536
+    vocab: 151936
+    ctx: 32768
+    lf_template: qwen
+    chinese: 4
+    license: Apache-2.0
+    commercial: true
+    gguf: self
+    note: 老一代，模板更稳，无思考模式
+
+  - id: Qwen3-4B-Instruct-2507
+    repo: Qwen/Qwen3-4B-Instruct-2507
+    params_b: 4.0
+    layers: 36
+    hidden: 2560
+    vocab: 151936
+    ctx: 262144
+    lf_template: qwen3_nothink
+    chinese: 5
+    license: Apache-2.0
+    commercial: true
+    gguf: self
+    mem_measured: 6.87         # 第 10 步冒烟实测：bs4 × seq576 × 4bit，峰值分配 6.87 GB
+    note: 8GB 显卡的甜点，中文最好
+
+  - id: Qwen2.5-7B-Instruct
+    repo: Qwen/Qwen2.5-7B-Instruct
+    params_b: 7.6
+    layers: 28
+    hidden: 3584
+    vocab: 152064
+    ctx: 32768
+    lf_template: qwen
+    chinese: 5
+    license: Apache-2.0
+    commercial: true
+    gguf: self
+    note: 需要 12GB 以上才能 bs≥2
+
+  - id: Qwen3-8B
+    repo: Qwen/Qwen3-8B
+    params_b: 8.2
+    layers: 36
+    hidden: 4096
+    vocab: 151936
+    ctx: 40960
+    lf_template: qwen3_nothink
+    chinese: 5
+    license: Apache-2.0
+    commercial: true
+    gguf: self
+    note: 16GB 档位的选择
+
+  - id: Qwen3-14B
+    repo: Qwen/Qwen3-14B
+    params_b: 14.8
+    layers: 40
+    hidden: 5120
+    vocab: 151936
+    ctx: 40960
+    lf_template: qwen3_nothink
+    chinese: 5
+    license: Apache-2.0
+    commercial: true
+    gguf: self
+    note: 24GB 档位
